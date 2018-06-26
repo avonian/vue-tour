@@ -102,8 +102,7 @@ export default {
     start () {
       // Wait for the DOM to be loaded, then start the tour
       setTimeout(() => {
-        this.customCallbacks.onStart()
-        this.currentStep = 0
+        this.currentStep = this.customCallbacks.onStart()
       }, this.customOptions.startTimeout)
     },
     previousStep () {
@@ -112,10 +111,12 @@ export default {
         this.currentStep--
       }
     },
-    nextStep () {
+    nextStep (timeout = 0) {
       if (this.currentStep < this.numberOfSteps - 1 && this.currentStep !== -1) {
-        this.customCallbacks.onNextStep(this.currentStep)
-        this.currentStep++
+        setTimeout(() => {
+          let nextStep = this.customCallbacks.onNextStep(this.currentStep)
+          this.currentStep = nextStep
+        }, timeout)
       }
     },
     stop () {

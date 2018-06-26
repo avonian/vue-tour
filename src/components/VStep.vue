@@ -55,7 +55,8 @@ export default {
   },
   data () {
     return {
-      hash: sum(this.step.target)
+      hash: sum(this.step.target),
+      interval: null
     }
   },
   computed: {
@@ -73,25 +74,30 @@ export default {
     // console.log('[Vue Tour] The target element ' + this.step.target + ' of .v-step[id="' + this.hash + '"] is:', targetElement)
 
     if (targetElement) {
-      targetElement.scrollIntoView({behavior: 'smooth'})
-
+      // targetElement.scrollIntoViewIf({behavior: 'smooth'})
       /* eslint-disable no-new */
-      new Popper(
+      let popper = new Popper(
         targetElement,
         this.$refs['v-step-' + this.hash],
         this.params
       )
+      this.interval = setInterval(() => {
+        popper.scheduleUpdate()
+      }, 250)
     } else {
       console.error('[Vue Tour] The target element ' + this.step.target + ' of .v-step[id="' + this.hash + '"] does not exist!')
       this.stop()
     }
+  },
+  destroyed () {
+    clearInterval(this.interval)
   }
 }
 </script>
 
 <style lang="scss" scoped>
   .v-step {
-    background: #50596c; /* #ffc107, #35495e */
+    background: #35454f; /* #ffc107, #35495e */
     color: white;
     max-width: 320px;
     border-radius: 3px;
@@ -109,10 +115,10 @@ export default {
   }
 
   .v-step .v-step__arrow {
-    border-color: #50596c; /* #ffc107, #35495e */
+    border-color: #35454f; /* #ffc107, #35495e */
 
     &--dark {
-      border-color: #454d5d;
+      border-color: #35454f;
     }
   }
 
