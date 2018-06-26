@@ -22,6 +22,7 @@
       </div>
     </slot>
 
+    <div class="v-step__arrow v-step__arrow_border" :class="{ 'v-step__arrow--dark': step.header && step.header.title }"></div>
     <div class="v-step__arrow" :class="{ 'v-step__arrow--dark': step.header && step.header.title }"></div>
   </div>
 </template>
@@ -115,7 +116,7 @@ export default {
   }
 
   .v-step .v-step__arrow {
-    border-color: #35454f; /* #ffc107, #35495e */
+    border-color: #9aa1a6; /* #ffc107, #35495e */
 
     &--dark {
       border-color: #35454f;
@@ -180,6 +181,26 @@ export default {
     top: calc(50% - 1rem);
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .v-step .v-step__arrow_border {
+    border-color: #35454f;
+    z-index: 1;
+  }
+  .v-step[x-placement^="left"] .v-step__arrow_border {
+    margin-right: 2px;
+  }
+
+  .v-step[x-placement^="right"] .v-step__arrow_border {
+    margin-left: 2px;
+  }
+
+  .v-step[x-placement^="top"] .v-step__arrow_border {
+    margin-bottom: 2px;
+  }
+
+  .v-step[x-placement^="bottom"] .v-step__arrow_border {
+    margin-top: 2px;
   }
 
   /* Custom */
